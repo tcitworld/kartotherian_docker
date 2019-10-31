@@ -324,7 +324,7 @@ def import_wikimedia_stats(ctx):
             f'wget --progress=dot:giga -O {target_file} {ctx.wikimedia_stats.url}'
         )
 
-    connection = _open_sql_connection(ctx, ctx.import_database)
+    connection = _open_sql_connection(ctx, ctx.pg.import_database)
     cursor = connection.cursor()
 
     with gzip.open(target_file, 'rt') as istream:
@@ -351,7 +351,7 @@ def import_wikidata_sitelinks(ctx):
             f'{ctx.wikidata.sitelinks.url}'
         )
 
-    connection = _open_sql_connection(ctx, ctx.import_database)
+    connection = _open_sql_connection(ctx, ctx.pg.import_database)
     cursor = connection.cursor()
 
     with gzip.open(target_file, 'rt') as istream:
@@ -380,7 +380,7 @@ def import_wikidata_labels(ctx):
 
     with gzip.open(target_file, 'rt') as istream:
         reader = csv.DictReader(istream)
-        connection = _open_sql_connection(ctx, ctx.import_database)
+        connection = _open_sql_connection(ctx, ctx.pg.import_database)
         cursor = connection.cursor()
 
         cursor.executemany(
